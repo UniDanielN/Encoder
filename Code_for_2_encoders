@@ -1,0 +1,41 @@
+#include <Encoder.h>
+Encoder myEnc1(2, 11); //enable pins with interrupt capability for Encoder 1
+Encoder myEnc2(3,12); //enable pins with interrupt capability for Encoder 2
+long oldPosition1  = -999;
+long oldPosition2  = -999;
+float distance1;
+float distance2;
+
+void setup() 
+{
+  Serial.begin(9600); 
+}
+
+void loop() 
+{
+  long newPosition1 = myEnc1.read();
+  long newPosition2 = myEnc2.read();
+  
+  // check if encoder1 has moved
+  if (newPosition1 != oldPosition1) 
+  {
+    oldPosition1 = newPosition1;
+    
+  // edit the code below to calculate the distance moved, +1 increment = (diameter*pi)/encoder count per revolution
+    distance1 = newPosition1 * ((0.06*M_PI)/24);
+    }
+
+// check if encoder2 has moved
+  if (newPosition2 != oldPosition2) 
+  {
+    oldPosition2 = newPosition2;
+    
+  // edit the code below to calculate the distance moved, +1 increment = (diameter*pi)/encoder count per revolution
+    distance2 = newPosition2 * ((0.06*M_PI)/24);
+    }
+   Serial.println("Encoder1:");
+   Serial.print(distance1);
+   Serial.println("Encoder2");
+   Serial.print(distance2);
+   delay(1500);
+}
